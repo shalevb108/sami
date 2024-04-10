@@ -1,0 +1,63 @@
+.container {
+    color: white;
+    background: linear-gradient(to left, #0b2399, #5063c3);
+    // background-image: url('backgrounds/blurry-gradient-haikei.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    direction: rtl;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container > section {
+    // z-index: 2;
+
+    padding: {
+        inline: 8rem;
+        block: 5rem;
+    }
+    border-radius: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: white, $alpha: 0.1);
+    box-shadow: 0 0 10rem 0rem rgba(3, 5, 54, 0.282);
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    max-width: 80ch;
+
+    gap: 1rem;
+
+    @media (max-width: 600px) {
+        max-width: 40ch;
+        padding: {
+            inline: 2rem;
+            block: 4rem;
+        }
+    }
+
+    h1 {
+        font-size: 2.3rem;
+        line-height: 3rem;
+    }
+
+    & > section:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    img {
+        height: 3rem;
+    }
+}
+
+.container > section > section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
