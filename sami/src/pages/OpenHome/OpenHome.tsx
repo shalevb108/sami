@@ -18,6 +18,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 export const OpenHome = () => {
   return (
     <div className={classes.body}>
+      <img src="./logo.jpeg" className={classes.logo}></img>
     <Form
       name="form"
       // labelCol={{ span: 8 }}
@@ -227,11 +228,11 @@ export const OpenHome = () => {
     <Form.Item label="הערות" name={"note"}>
       <Input.TextArea allowClear showCount />
     </Form.Item>
-
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+      <Form.Item >
+    <div className={classes.submitBody}>
+        <button className={classes.submit}>
+          סיום
+        </button></div>
       </Form.Item>
     </Form>
     </div>
