@@ -7,6 +7,7 @@ import { emailService } from "../../services/email.service";
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
   console.log("Success:", values);
+  alert("הטופס נשלח בהצלחה");
 };
 
 const handleSendEmail = async (email: Email) => {
