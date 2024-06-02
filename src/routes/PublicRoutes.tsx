@@ -7,8 +7,8 @@ export interface PublicRoutesProps {}
 export const PublicRoutes: React.FC<PublicRoutesProps> = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/survey" element={<OpenHome />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<OpenHome />} />
     </Routes>
   </BrowserRouter>
 );
