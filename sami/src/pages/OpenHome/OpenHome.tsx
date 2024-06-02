@@ -1,17 +1,20 @@
 // import classes from "./open-home.module.scss";
 import { Button, Checkbox, Form, type FormProps, Input, Radio } from "antd";
 import classes from './open-home.module.scss'
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
+import { Email } from "../../models/email.model";
+import { emailService } from "../../services/email.service";
 
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+
+const onFinish: FormProps<Email>["onFinish"] = (values) => {
+  handleSendEmail(values);
   console.log("Success:", values);
 };
 
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+const handleSendEmail = async (email:Email) => {
+  await emailService.create(email);
+};
+
+const onFinishFailed: FormProps<Email>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
