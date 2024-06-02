@@ -1,8 +1,8 @@
 import { Button, Form, Input } from "antd";
-import classes from './login.module.scss'
-import { useQuery } from "@tanstack/react-query";
+import classes from "./login.module.scss";
 import { usersService } from "../../services/users.service";
 import { useEffect, useState } from "react";
+import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 
 type FieldType = {
   username: string;
@@ -10,28 +10,25 @@ type FieldType = {
 };
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState<any>(); // Change the type as needed
+  const [userData, setUserData] = useState<boolean>(); // Change the type as needed
 
   const onFinish = async (values: FieldType) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
     // setUsername(values.username);
     // setPassword(values.password);
 
     // Call useQuery directly here
-    const data  = await usersService.findOne(values.username, values.password);
+    const data = await usersService.findOne(values.username, values.password);
     setUserData(data);
   };
-  useEffect(()=>{
+  useEffect(() => {
     console.log(userData);
-    
-  },[userData])
+  }, [userData]);
 
   console.log(userData); // Access user data here
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = (errorInfo: ValidateErrorEntity<FieldType>) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -50,7 +47,7 @@ export const Login = () => {
         <Form.Item
           label="שם משתמש"
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: "Please input your username!" }]}
         >
           <Input />
         </Form.Item>
@@ -58,7 +55,7 @@ export const Login = () => {
         <Form.Item
           label="סיסמא"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input.Password />
         </Form.Item>
