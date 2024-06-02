@@ -1,13 +1,9 @@
 import "./App.css";
-import { Login } from "./pages/Login";
-import { OpenHome } from "./pages/OpenHome";
+
+import { Switchboard } from "./routes/Switchboard";
 
 function App() {
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return <Switchboard />;
 }
 
 export default App;
