@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { User, UserSchema } from '../models/user.model';
 
 const PREFIX = 'users';
-const SERVER_URL = "http://localhost:3000"; // Update with your server URL
+const SERVER_URL = 'https://sami-backend-j9lt.onrender.com'; // Update with your server URL "http://localhost:3000"
 
 class UsersService {
     async getAll() {

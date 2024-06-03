@@ -2,7 +2,7 @@ import axios from "axios";
 import { Email } from "../models/email.model";
 
 const PREFIX = "email";
-const SERVER_URL = "http://localhost:3000"; // Update with your server URL
+const SERVER_URL = 'https://sami-backend-j9lt.onrender.com'; // Update with your server URL
 
 function convertDateFormat(email: Email): Email {
   // Create a new Date object from the string
