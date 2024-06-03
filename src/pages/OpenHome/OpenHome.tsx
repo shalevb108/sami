@@ -153,8 +153,8 @@ export const OpenHome = () => {
            })}
           </Select>
         </Form.Item>
-         <Form.Item label="מנהל זכיין" name="manager"  rules={[{ required: true, message: "מלא את שם המנהל בבקשה" }]}>
-        <Input placeholder="מנהל זכיין" />
+         <Form.Item label="מנהל\ זכיין" name="manager"  rules={[{ required: true, message: "מלא את שם המנהל בבקשה" }]}>
+        <Input placeholder="מנהל\ זכיין" />
       </Form.Item>
       <Form.Item label="עובד 1" name="employee1">
         <Input placeholder="עובד 1" />
@@ -227,6 +227,17 @@ export const OpenHome = () => {
         <Form.Item
           name="envelopesInDay"
           label="עד 6 מעטפות יומיות בכספת"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>כן</Radio.Button>
+            <Radio.Button value={false}>לא</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item
+          name="cameras"
+          label="מצלמות"
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
         >
           <Radio.Group>
