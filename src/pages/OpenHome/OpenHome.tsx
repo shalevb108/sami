@@ -3,6 +3,7 @@ import { Button, Form, type FormProps, Input, Radio, DatePicker, Select } from "
 import classes from "./open-home.module.scss";
 import { Email } from "../../models/email.model";
 import { emailService } from "../../services/email.service";
+import { useState } from "react";
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
@@ -94,30 +95,36 @@ const addresses = [
 const emails =[
   {
     email:["Shani_a@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת רשת רזילי"
+    description:"מנהלת רשת רזילי (שני)"
   },
   {
     email:["Noa_s@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור דרום אינטר ג׳ינס"
+    description:"מנהלת אזור דרום אינטר ג׳ינס (נועה)"
   },
   {
     email:["Ohad_b@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהל אזור צפון אינטר ג׳ינס"
+    description:"מנהל אזור צפון אינטר ג׳ינס (אוהד)"
   },
   {
     email:["Maayan_i@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור דרום סטיב מאדן"
+    description:"מנהלת אזור דרום סטיב מאדן (מעיין)"
   },
   {
     email:["Natali_y@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור צפון סטיב מאדן"
+    description:"מנהלת אזור צפון סטיב מאדן (נטלי)"
   },
   {
     email:["elad_p@inter-jeans.co.il","elad_a@inter-jeans.co.il"],
-    description:"ריפליי"
+    description:"ריפליי (אלעד)"
   },
 ]
 export const OpenHome = () => {
+  const [managerOption, setManagerOption] = useState<string>('');
+
+  const handleManagerOptionChange = (e: any) => {
+    setManagerOption(e.target.value);
+  };
+
   return (
     <div className={classes.page}>
       <img src="./logo.jpeg" className={classes.logo}></img>
@@ -153,8 +160,18 @@ export const OpenHome = () => {
            })}
           </Select>
         </Form.Item>
-         <Form.Item label="מנהל\ זכיין" name="manager"  rules={[{ required: true, message: "מלא את שם המנהל בבקשה" }]}>
-        <Input placeholder="מנהל\ זכיין" />
+        <Form.Item
+          name="managerOption"
+          label="סוג הלקוח"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <Radio.Group onChange={handleManagerOptionChange}>
+            <Radio.Button value={"מנהל"}>מנהל</Radio.Button>
+            <Radio.Button value={"זכיין"}>זכיין</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+         <Form.Item label={`שם ה${managerOption}`} name="manager"  rules={[{ required: true, message: "מלא את שם המנהל בבקשה" }]}>
+        <Input placeholder={`שם ה${managerOption}`}/>
       </Form.Item>
       <Form.Item label="עובד 1" name="employee1">
         <Input placeholder="עובד 1" />
@@ -306,7 +323,7 @@ export const OpenHome = () => {
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item
+        {managerOption==='מנהל'&&<Form.Item
           name="smallRegister"
           label="בדיקת קופה קטנה (רשת)"
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
@@ -315,7 +332,7 @@ export const OpenHome = () => {
             <Radio.Button value={true}>כן</Radio.Button>
             <Radio.Button value={false}>לא</Radio.Button>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item>}
         <Form.Item label="הערות" name={"registerNotes"}>
           <Input.TextArea allowClear showCount />
         </Form.Item>
@@ -357,8 +374,7 @@ export const OpenHome = () => {
           <Input.TextArea allowClear showCount />
         </Form.Item>
 
-        <label>נוכחות עובדים:</label>
-        <Form.Item
+       {managerOption==='מנהל'&& <><label>נוכחות עובדים:</label><Form.Item
           name="employeeAttendance"
           label="נוכחות עובדים בסניף"
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
@@ -367,17 +383,16 @@ export const OpenHome = () => {
             <Radio.Button value={true}>כן</Radio.Button>
             <Radio.Button value={false}>לא</Radio.Button>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item label="הערות" name={"attendanceNotes"}>
-          <Input.TextArea allowClear showCount />
-        </Form.Item>
+        </Form.Item><Form.Item label="הערות" name={"attendanceNotes"}>
+            <Input.TextArea allowClear showCount />
+          </Form.Item></>}
 
         <label>תשאול עובדים:</label>
 
         <Form.Item label="הערות" name={"employeeNotes"}>
           <Input.TextArea allowClear showCount />
         </Form.Item>
-        <Form.Item label="למי לשלוח" name="emailAddress" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="למי לשלוח" name="emailAddress" style={{ width: '25rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הנמענים">
            {emails.map((email)=>{
             return <Select.Option value={JSON.stringify(email.email)}  dir="rtl">{email.description}</Select.Option>
