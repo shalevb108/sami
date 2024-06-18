@@ -135,7 +135,7 @@ export const OpenHome = () => {
         <Form.Item label="תאריך" name="date"  rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <DatePicker />
         </Form.Item>
-        <Form.Item label="רשת" name="company" style={{ width: '40%'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="רשת" name="company" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הרשתות">
             <Select.Option value="סטיב מאדן"   dir="rtl">סטיב מאדן</Select.Option>
             <Select.Option value="אינטר גינס"  dir="rtl">אינטר גינס</Select.Option>
@@ -146,7 +146,7 @@ export const OpenHome = () => {
             <Select.Option value="אינטימיסימי"  dir="rtl">אינטימיסימי</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="כתובת הסניף" name="address" style={{ width: '50%'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="כתובת הסניף" name="address" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הסניפים">
            {addresses.map((address)=>{
             return <Select.Option value={address}  dir="rtl">{address}</Select.Option>
@@ -377,7 +377,7 @@ export const OpenHome = () => {
         <Form.Item label="הערות" name={"employeeNotes"}>
           <Input.TextArea allowClear showCount />
         </Form.Item>
-        <Form.Item label="למי לשלוח" name="emailAddress" style={{ width: '50%'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="למי לשלוח" name="emailAddress" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הנמענים">
            {emails.map((email)=>{
             return <Select.Option value={JSON.stringify(email.email)}  dir="rtl">{email.description}</Select.Option>
