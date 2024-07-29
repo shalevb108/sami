@@ -12,7 +12,7 @@ import {
 import classes from "./open-home.module.scss";
 import { Email } from "../../models/email.model";
 import { emailService } from "../../services/email.service";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
