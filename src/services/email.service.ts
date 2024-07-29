@@ -6,8 +6,13 @@ const SERVER_URL = "https://sami-backend-j9lt.onrender.com"; // Update with your
 
 function convertDateFormat(email: Email): Email {
   // Create a new Date object from the string
-  const date = new Date(email.date);
+  const time = new Date(email.time);
+  const formattedTime = `${time.getHours().toString().padStart(2, "0")}:${time
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
 
+  const date = new Date(email.date);
   // Extract the day, month, and year from the date object
   const day = String(date.getUTCDate() + 1).padStart(2, "0");
   const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-indexed
@@ -27,6 +32,7 @@ function convertDateFormat(email: Email): Email {
     ...email,
     emailAddress: `${emailString}, roshcontrol@gmail.com`,
     date: formattedDate,
+    time: formattedTime,
   };
 }
 

@@ -1,5 +1,14 @@
 // import classes from "./open-home.module.scss";
-import { Button, Form, type FormProps, Input, Radio, DatePicker, Select } from "antd";
+import {
+  Button,
+  Form,
+  type FormProps,
+  Input,
+  Radio,
+  DatePicker,
+  Select,
+  TimePicker,
+} from "antd";
 import classes from "./open-home.module.scss";
 import { Email } from "../../models/email.model";
 import { emailService } from "../../services/email.service";
@@ -8,7 +17,7 @@ import { useEffect, useMemo, useState } from "react";
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
   console.log("Success:", values);
-  alert("הטופס נשלח בהצלחה"); 
+  alert("הטופס נשלח בהצלחה");
 };
 
 const handleSendEmail = async (email: Email) => {
@@ -123,8 +132,12 @@ export const OpenHome = () => {
   const [company, setCompany] = useState<string>('');
 
   const handleManagerOptionChange = (e: any) => {
+    console.log("====================================");
+    console.log(e.target);
+    console.log("====================================");
     setManagerOption(e.target.value);
   };
+  const timeFormat = "HH:mm";
 
   const handleCompanyChange = (e: any) => {
     setCompany(e);
@@ -151,8 +164,19 @@ export const OpenHome = () => {
         autoComplete="off"
         className={classes.form}
       >
-        <Form.Item label="תאריך" name="date"  rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item
+          label="תאריך"
+          name="date"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
           <DatePicker />
+        </Form.Item>
+        <Form.Item
+          label="שעה"
+          name="time"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <TimePicker format={timeFormat} />
         </Form.Item>
         <Form.Item label="רשת" name="company" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הרשתות" onChange={handleCompanyChange}>
@@ -341,16 +365,18 @@ export const OpenHome = () => {
           </Radio.Group>
         </Form.Item>
 
-        {managerOption==='מנהל'&&<Form.Item
-          name="smallRegister"
-          label="בדיקת קופה קטנה (רשת)"
-          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
-        >
-          <Radio.Group>
-            <Radio.Button value={true}>כן</Radio.Button>
-            <Radio.Button value={false}>לא</Radio.Button>
-          </Radio.Group>
-        </Form.Item>}
+        {managerOption === "מנהל" && (
+          <Form.Item
+            name="smallRegister"
+            label="בדיקת קופה קטנה (רשת)"
+            rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+          >
+            <Radio.Group>
+              <Radio.Button value={true}>כן</Radio.Button>
+              <Radio.Button value={false}>לא</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+        )}
         <Form.Item label="הערות" name={"registerNotes"}>
           <Input.TextArea allowClear showCount />
         </Form.Item>
@@ -446,11 +472,20 @@ export const OpenHome = () => {
         <Form.Item label="הערות" name={"employeeNotes"}>
           <Input.TextArea allowClear showCount />
         </Form.Item>
-        <Form.Item label="למי לשלוח" name="emailAddress" style={{ width: '25rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item
+          label="למי לשלוח"
+          name="emailAddress"
+          style={{ width: "25rem" }}
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
           <Select placeholder="בחר מבין הנמענים">
-           {emails.map((email)=>{
-            return <Select.Option value={JSON.stringify(email.email)}  dir="rtl">{email.description}</Select.Option>
-           })}
+            {emails.map((email) => {
+              return (
+                <Select.Option value={JSON.stringify(email.email)} dir="rtl">
+                  {email.description}
+                </Select.Option>
+              );
+            })}
           </Select>
         </Form.Item>
         <Form.Item>
