@@ -3,7 +3,7 @@ import { Button, Form, type FormProps, Input, Radio, DatePicker, Select } from "
 import classes from "./open-home.module.scss";
 import { Email } from "../../models/email.model";
 import { emailService } from "../../services/email.service";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
@@ -20,27 +20,27 @@ const onFinishFailed: FormProps<Email>["onFinishFailed"] = (errorInfo) => {
 };
 
 const addresses = [
-  "מאדן איילון זכיין - 36",
-  "מאדן אייס מול אילת - 80",
-  "מאדן אילת נפטון - 34",
-  "מאדן ביג אשדוד - 17",
-  "מאדן ביג נצרת זכיין - 87",
-  "מאדן בילו עודפים - 70",
-  "מאדן גראנד חיפה - 39",
-  "מאדן גרנד ב\"ש זכיין - 85",
-  "מאדן הזהב זכיין - 37",
-  "מאדן הרצליה עודפים - 83",
-  "מאדן חולון עודפים זכיין - 31",
-  "מאדן חוצות עודפים - 86",
-  "מאדן מודיעין - 58",
-  "מאדן מלחה ירושלים - 41",
-  "מאדן ממילא זכיין - 42",
-  "מאדן נוף הגליל זכיין - 30",
-  "מאדן עיר ימים - 81",
-  "מאדן פ\"ת זכיין - 52",
-  "מאדן קריון - 82",
-  "מאדן רוגובין עודפים - 32",
-  "מאדן רמ\"א זכיין - 26",
+  "סטיב מאדן איילון זכיין - 36",
+  "סטיב מאדן אייס מול אילת - 80",
+  "סטיב מאדן אילת נפטון - 34",
+  "סטיב מאדן ביג אשדוד - 17",
+  "סטיב מאדן ביג נצרת זכיין - 87",
+  "סטיב מאדן בילו עודפים - 70",
+  "סטיב מאדן גראנד חיפה - 39",
+  "סטיב מאדן גרנד ב\"ש זכיין - 85",
+  "סטיב מאדן הזהב זכיין - 37",
+  "סטיב מאדן הרצליה עודפים - 83",
+  "סטיב מאדן חולון עודפים זכיין - 31",
+  "סטיב מאדן חוצות עודפים - 86",
+  "סטיב מאדן מודיעין - 58",
+  "סטיב מאדן מלחה ירושלים - 41",
+  "סטיב מאדן ממילא זכיין - 42",
+  "סטיב מאדן נוף הגליל זכיין - 30",
+  "סטיב מאדן עיר ימים - 81",
+  "סטיב מאדן פ\"ת זכיין - 52",
+  "סטיב מאדן קריון - 82",
+  "סטיב מאדן רוגובין עודפים - 32",
+  "סטיב מאדן רמ\"א זכיין - 26",
   "סטיב מאדן וילג חדרה - 35",
   "רזילי גבעתיים - 216",
   "רזילי גראנד חיפה - 223",
@@ -62,14 +62,14 @@ const addresses = [
   "ריפלי פתח תקווה - 78",
   "ריפלי רוגובין נתניה - 43",
   "ריפלי תלפיות - 63",
-  "ריפליי אאוטלט באר שבע - 16",
-  "ריפליי אאוטלט חולון - 10",
-  "ריפליי אאוטלט קונגרסים חיפה - 14",
-  "ריפליי אילת טיילת נפטון - 22",
-  "ריפליי ביג אשדוד - 46",
-  "ריפליי נמל תל אביב - 12",
-  "ריפליי קניון רמת אביב - 15",
-  "ריפליי קריון - 17",
+  "ריפלי אאוטלט באר שבע - 16",
+  "ריפלי אאוטלט חולון - 10",
+  "ריפלי אאוטלט קונגרסים חיפה - 14",
+  "ריפלי אילת טיילת נפטון - 22",
+  "ריפלי ביג אשדוד - 46",
+  "ריפלי נמל תל אביב - 12",
+  "ריפלי קניון רמת אביב - 15",
+  "ריפלי קריון - 17",
   "JNI אילת אייס מול - 44",
   "JNI אילת ביג - 21",
   "JNI עודפים אילת הרודס - 96",
@@ -119,11 +119,23 @@ const emails =[
   },
 ]
 export const OpenHome = () => {
-  const [managerOption, setManagerOption] = useState<string>('');
+  const [managerOption, setManagerOption] = useState<string>('מנהל');
+  const [company, setCompany] = useState<string>('');
 
   const handleManagerOptionChange = (e: any) => {
     setManagerOption(e.target.value);
   };
+
+  const handleCompanyChange = (e: any) => {
+    setCompany(e);
+  };
+
+  const correctAddress = useMemo(
+    () => 
+      addresses.filter(address => address.includes(company==='אינטר גינס' ? 'JNI':company))
+    ,
+    [company]
+  );
 
   return (
     <div className={classes.page}>
@@ -143,21 +155,24 @@ export const OpenHome = () => {
           <DatePicker />
         </Form.Item>
         <Form.Item label="רשת" name="company" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
-          <Select placeholder="בחר מבין הרשתות">
+          <Select placeholder="בחר מבין הרשתות" onChange={handleCompanyChange}>
             <Select.Option value="סטיב מאדן"   dir="rtl">סטיב מאדן</Select.Option>
             <Select.Option value="אינטר גינס"  dir="rtl">אינטר גינס</Select.Option>
             <Select.Option value="רזילי"  dir="rtl">רזילי</Select.Option>
-            <Select.Option value="ריפליי"  dir="rtl">ריפליי</Select.Option>
+            <Select.Option value="ריפלי"  dir="rtl">ריפלי</Select.Option>
             <Select.Option value="טזניס"  dir="rtl">טזניס</Select.Option>
             <Select.Option value="קלסדוניה"  dir="rtl">קלסדוניה</Select.Option>
             <Select.Option value="אינטימיסימי"  dir="rtl">אינטימיסימי</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="כתובת הסניף" name="address" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        
+        <Form.Item label="כתובת הסניף" name="address" style={{ width: '25rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הסניפים">
-           {addresses.map((address)=>{
-            return <Select.Option value={address}  dir="rtl">{address}</Select.Option>
-           })}
+          {correctAddress.map((address) => (
+      <Select.Option  dir="rtl" key={address} value={address}>
+        {address}
+      </Select.Option>
+    ))}
           </Select>
         </Form.Item>
         <Form.Item
@@ -165,7 +180,7 @@ export const OpenHome = () => {
           label="סוג הלקוח"
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
         >
-          <Radio.Group onChange={handleManagerOptionChange}>
+          <Radio.Group onChange={handleManagerOptionChange} defaultValue={"מנהל"}> 
             <Radio.Button value={"מנהל"}>מנהל</Radio.Button>
             <Radio.Button value={"זכיין"}>זכיין</Radio.Button>
           </Radio.Group>
@@ -185,6 +200,9 @@ export const OpenHome = () => {
       <Form.Item label="עובד 4" name="employee4">
         <Input placeholder="עובד 4" />
       </Form.Item>
+      <Form.Item label="הערות" name={"attendanceNotes"}>
+            <Input.TextArea allowClear showCount />
+          </Form.Item>
         <label>כספת:</label>
         <Form.Item
           name="safe"
@@ -374,6 +392,44 @@ export const OpenHome = () => {
           <Input.TextArea allowClear showCount />
         </Form.Item>
 
+        <label>ביטחון:</label>
+        <Form.Item
+          name="buzzerDetector"
+          label='בדיקת גלאי זמזמים'
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>כן</Radio.Button>
+            <Radio.Button value={false}>לא</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item
+          name="buzzersInItems"
+          label="בדיקת זמזמים בפריטים"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>כן</Radio.Button>
+            <Radio.Button value={false}>לא</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item
+          name="warehouseDoor"
+          label="דלת מחסן פנימית/חיצונית"
+          rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>כן</Radio.Button>
+            <Radio.Button value={false}>לא</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="הערות" name={"securityNotes"}>
+          <Input.TextArea allowClear showCount />
+        </Form.Item>
+
+
        {managerOption==='מנהל'&& <><label>נוכחות עובדים:</label><Form.Item
           name="employeeAttendance"
           label="נוכחות עובדים בסניף"
@@ -383,9 +439,7 @@ export const OpenHome = () => {
             <Radio.Button value={true}>כן</Radio.Button>
             <Radio.Button value={false}>לא</Radio.Button>
           </Radio.Group>
-        </Form.Item><Form.Item label="הערות" name={"attendanceNotes"}>
-            <Input.TextArea allowClear showCount />
-          </Form.Item></>}
+        </Form.Item></>}
 
         <label>תשאול עובדים:</label>
 
