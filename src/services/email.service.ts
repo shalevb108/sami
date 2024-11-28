@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Email } from "../models/email.model";
+import { Email, SavedEmail, SavedEmailSchema } from "../models/email.model";
 
 const PREFIX = "email";
-const SERVER_URL = "https://sami-backend-j9lt.onrender.com"; // Update with your server URL
+const SERVER_URL = "https://sami-backend-j9lt.onrender.com"; // Update with your server URL "https://sami-backend-j9lt.onrender.com"
 
 function convertDateFormat(email: Email): Email {
   // Create a new Date object from the string
@@ -48,6 +48,29 @@ class EmailService {
       throw new Error("Error creating email");
     }
   }
+
+  async getAllEmails() {
+    try {
+        const response = await axios.get<SavedEmail[]>(`${SERVER_URL}/${PREFIX}`);
+        const parsed = SavedEmailSchema.array().parse(response.data);
+        return parsed;
+    } catch (e: any) {
+        console.error(e.message);
+        throw new Error('Error getting users');
+    }
+}
+
+async sendAgain(content: SavedEmail) {
+  try {
+    const response = await axios.post<SavedEmail>(
+      `${SERVER_URL}/${PREFIX}/send-again`,
+      content
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error("Error sending email again");
+  }
+}
 }
 
 export const emailService = new EmailService();

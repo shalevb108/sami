@@ -13,6 +13,8 @@ import classes from "./open-home.module.scss";
 import { Email } from "../../models/email.model";
 import { emailService } from "../../services/email.service";
 import { useMemo, useState } from "react";
+import { addresses, emails } from "./util";
+import { SavedEmailsModal } from "../../components/SavedEmailsModal/SavedEmailsModal";
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
@@ -28,105 +30,6 @@ const onFinishFailed: FormProps<Email>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-const addresses = [
-  "סטיב מאדן איילון זכיין - 36",
-  "סטיב מאדן אייס מול אילת - 80",
-  "סטיב מאדן אילת נפטון - 34",
-  "סטיב מאדן ביג אשדוד - 17",
-  "סטיב מאדן ביג נצרת זכיין - 87",
-  "סטיב מאדן בילו עודפים - 70",
-  "סטיב מאדן גראנד חיפה - 39",
-  "סטיב מאדן גרנד ב\"ש זכיין - 85",
-  "סטיב מאדן הזהב זכיין - 37",
-  "סטיב מאדן הרצליה עודפים - 83",
-  "סטיב מאדן חולון עודפים זכיין - 31",
-  "סטיב מאדן חוצות עודפים - 86",
-  "סטיב מאדן מודיעין - 58",
-  "סטיב מאדן מלחה ירושלים - 41",
-  "סטיב מאדן ממילא זכיין - 42",
-  "סטיב מאדן נוף הגליל זכיין - 30",
-  "סטיב מאדן עיר ימים - 81",
-  "סטיב מאדן פ\"ת זכיין - 52",
-  "סטיב מאדן קריון - 82",
-  "סטיב מאדן רוגובין עודפים - 32",
-  "סטיב מאדן רמ\"א זכיין - 26",
-  "סטיב מאדן וילג חדרה - 35",
-  "רזילי גבעתיים - 216",
-  "רזילי גראנד חיפה - 223",
-  "רזילי עודפים בילו - 229",
-  "רזילי עודפים רוגובין - 231",
-  "רזילי פ\"ת - 227",
-  "רזילי קריון - 224",
-  "רזילי רחובות - 221",
-  "רזילי רמ\"א - 211",
-  "ריפלי באר שבע - 79",
-  "ריפלי גן שמואל - 61",
-  "ריפלי וילג' חדרה - 62",
-  "ריפלי זהב - 49",
-  "ריפלי כפר סבא - 89",
-  "ריפלי נוף הגליל - 48",
-  "ריפלי עיר ימים - 40",
-  "ריפלי עפולה - 20",
-  "ריפלי פופ אפ עזריאלי - 91",
-  "ריפלי פתח תקווה - 78",
-  "ריפלי רוגובין נתניה - 43",
-  "ריפלי תלפיות - 63",
-  "ריפלי אאוטלט באר שבע - 16",
-  "ריפלי אאוטלט חולון - 10",
-  "ריפלי אאוטלט קונגרסים חיפה - 14",
-  "ריפלי אילת טיילת נפטון - 22",
-  "ריפלי ביג אשדוד - 46",
-  "ריפלי נמל תל אביב - 12",
-  "ריפלי קניון רמת אביב - 15",
-  "ריפלי קריון - 17",
-  "JNI אילת אייס מול - 44",
-  "JNI אילת ביג - 21",
-  "JNI עודפים אילת הרודס - 96",
-  "JNI עודפים אילת קלאב הוטל - 95",
-  "JNI איילון - 67",
-  "JNI בילו - 33",
-  "JNI יהוד ביג - 73",
-  "JNI כרמיאל ביג - 74",
-  "JNI מבקיעים אשקלון - 65",
-  "JNI נצרת - 64",
-  "JNI קרית אתא - 90",
-  "JNI ראש פינה - 56",
-  "JNI ראשונים - 18",
-  "JNI רמלה - 66",
-  "JNI שער הצפון - 23",
-  "JNI עודפים אמות כרמיאל - 35",
-  "JNI עודפים באר שבע ביג - 45",
-  "JNI עודפים חולון המכתש - 77",
-  "JNI עודפים כנות - 97",
-  "JNI עודפים עד הלום - 92"
-];
-
-const emails =[
-  {
-    email:["Shani_a@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת רשת רזילי (שני)"
-  },
-  {
-    email:["Noa_s@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור דרום אינטר ג׳ינס (נועה)"
-  },
-  {
-    email:["Ohad_b@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהל אזור צפון אינטר ג׳ינס (אוהד)"
-  },
-  {
-    email:["Maayan_i@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור דרום סטיב מאדן (מעיין)"
-  },
-  {
-    email:["Natali_y@inter-jeans.co.il","Roei_m@inter-jeans.co.il"],
-    description:"מנהלת אזור צפון סטיב מאדן (נטלי)"
-  },
-  {
-    email:["elad_p@inter-jeans.co.il","elad_a@inter-jeans.co.il"],
-    description:"ריפליי (אלעד)"
-  },
-]
 export const OpenHome = () => {
   const [managerOption, setManagerOption] = useState<string>('מנהל');
   const [company, setCompany] = useState<string>('');
@@ -152,13 +55,16 @@ export const OpenHome = () => {
 
   return (
     <div className={classes.page}>
+      <div className={classes.header}>
       <img src="./logo.jpeg" className={classes.logo}></img>
+      <SavedEmailsModal/>
+      </div>
       <Form
         name="form"
-        // labelCol={{ span: 8 }}
-        // wrapperCol={{ span: 16 }}
-        // style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
+        // labelCol={{ span: 4 }}
+        // wrapperCol={{ span:  }}
+        // style={{ maxWidth: 400 }}
+        initialValues={{ remember: true , managerOption: 'מנהל'}}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
@@ -190,7 +96,7 @@ export const OpenHome = () => {
           </Select>
         </Form.Item>
         
-        <Form.Item label="כתובת הסניף" name="address" style={{ width: '25rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="כתובת הסניף" name="address" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הסניפים">
           {correctAddress.map((address) => (
       <Select.Option  dir="rtl" key={address} value={address}>
@@ -204,7 +110,7 @@ export const OpenHome = () => {
           label="סוג הלקוח"
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
         >
-          <Radio.Group onChange={handleManagerOptionChange} defaultValue={"מנהל"}> 
+          <Radio.Group onChange={handleManagerOptionChange}> 
             <Radio.Button value={"מנהל"}>מנהל</Radio.Button>
             <Radio.Button value={"זכיין"}>זכיין</Radio.Button>
           </Radio.Group>
@@ -475,7 +381,7 @@ export const OpenHome = () => {
         <Form.Item
           label="למי לשלוח"
           name="emailAddress"
-          style={{ width: "25rem" }}
+          style={{ width: "20rem" }}
           rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}
         >
           <Select placeholder="בחר מבין הנמענים">
