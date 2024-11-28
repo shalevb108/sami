@@ -1,11 +1,11 @@
 import classes from "./saved-emails-modal.module.scss";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { SavedEmails } from "../SavedEmails/SavedEmails";
 
 export const SavedEmailsModal = () => {
 
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
