@@ -93,7 +93,7 @@ export const emails = [
     description: "מנהלת אזור צפון סטיב מאדן (נטלי)",
   },
   {
-    email: ["elad_p@inter-jeans.co.il", "elad_a@inter-jeans.co.il"],
+    email: ["elad_p@inter-jeans.co.il", "elad_a@inter-jeans.co.il", "elad_e@inter-jeans.co.il"],
     description: "ריפליי (אלעד)",
   },
 ];
