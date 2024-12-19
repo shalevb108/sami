@@ -96,7 +96,7 @@ export const OpenHome = () => {
           </Select>
         </Form.Item>
         
-        <Form.Item label="כתובת הסניף" name="address" style={{ width: '20rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
+        <Form.Item label="כתובת הסניף" name="address" style={{ width: '25rem'}} rules={[{ required: true, message: "בחר בבקשה מבין האופציות" }]}>
           <Select placeholder="בחר מבין הסניפים">
           {correctAddress.map((address) => (
       <Select.Option  dir="rtl" key={address} value={address}>
