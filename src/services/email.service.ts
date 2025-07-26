@@ -49,6 +49,18 @@ class EmailService {
     }
   }
 
+   // Method to download the Word file
+   async downloadWordFile(content: Email) {
+    try {
+      const response = await axios.post(`${SERVER_URL}/email/download`, content, {
+        responseType: 'blob', // Ensure the response is treated as a file
+      });
+      return response;
+    } catch (e) {
+      throw new Error("Error downloading Word file");
+    }
+  }
+
   async getAllEmails() {
     try {
         const response = await axios.get<SavedEmail[]>(`${SERVER_URL}/${PREFIX}`);

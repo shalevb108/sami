@@ -18,6 +18,7 @@ import { SavedEmailsModal } from "../../components/SavedEmailsModal/SavedEmailsM
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
+  handleDownloadWordFile(values);
   console.log("Success:", values);
   alert("הטופס נשלח בהצלחה");
 };
@@ -29,6 +30,35 @@ const handleSendEmail = async (email: Email) => {
 const onFinishFailed: FormProps<Email>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
+
+const handleDownloadWordFile = async (email: Email) => {
+  try {
+    const response = await fetch('http://localhost:3000/email/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(email),
+    });
+
+    if (response.ok) {
+      // Create a Blob from the response
+      const blob = await response.blob();
+
+      // Create an anchor element for the download link
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${email.address}-report.docx`; // The name of the downloaded file
+      link.click(); // Trigger the download
+    } else {
+      const errorText = await response.text();
+      console.error('Error generating Word file:', errorText);
+      alert('Error generating Word file');
+    }
+  } catch (error) {
+    console.error('Network or server error:', error);
+    alert('Error generating Word file');
+  }
+};
+
 
 export const OpenHome = () => {
   const [managerOption, setManagerOption] = useState<string>('מנהל');
@@ -45,6 +75,7 @@ export const OpenHome = () => {
   const handleCompanyChange = (e: any) => {
     setCompany(e);
   };
+
 
   const correctAddress = useMemo(
     () => 
