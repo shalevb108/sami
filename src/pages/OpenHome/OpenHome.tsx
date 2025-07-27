@@ -18,7 +18,7 @@ import { SavedEmailsModal } from "../../components/SavedEmailsModal/SavedEmailsM
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
-  // handleDownloadWordFile(values);
+  handleDownloadWordFile(values);
   console.log("Success:", values);
   alert("הטופס נשלח בהצלחה");
 };
@@ -33,7 +33,7 @@ const onFinishFailed: FormProps<Email>["onFinishFailed"] = (errorInfo) => {
 
 const handleDownloadWordFile = async (email: Email) => {
   try {
-    const response = await fetch('http://localhost:3000/email/download', {
+    const response = await fetch('https://sami-backend-j9lt.onrender.com/email/download', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(email),
