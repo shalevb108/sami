@@ -18,7 +18,7 @@ import { SavedEmailsModal } from "../../components/SavedEmailsModal/SavedEmailsM
 
 const onFinish: FormProps<Email>["onFinish"] = (values) => {
   handleSendEmail(values);
-  handleDownloadWordFile(values);
+  // handleDownloadWordFile(values);
   console.log("Success:", values);
   alert("הטופס נשלח בהצלחה");
 };
